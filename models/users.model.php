@@ -57,9 +57,9 @@
  	function addUser($username, $firstName, $lastName, $email, $passwd, $oauth, $conn)
  	{	
  		// Cria sql
- 		$sql = "INSERT INTO app_users
- 		(username, firstName, lastName, email, password, oauth) 
- 		VALUES ('$username', '$firstName', '$lastName', '$email', '$passwd', '$oauth');";
+ 		$sql = "INSERT INTO app_conta
+ 		(conta_firstname, conta_lastname, conta_username, conta_email, conta_password, conta_oauth) 
+ 		VALUES ('$firstName', '$lastName', '$username',  '$email', '$passwd', '$oauth');";
 
  		// Insere no banco 
  		if($this->inputSql($sql,$conn))

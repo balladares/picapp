@@ -1,8 +1,8 @@
 $(document).ready(function(){
-	$("#btnLogar").click(function(e){
+	$("#btnCadastrar").click(function(e){
 		e.preventDefault();
 
-			var dados = $("#formLogin").serialize();
+			var dados = $("#formCadastro").serialize();
 			
 			cadastraUsuario(dados);
 
