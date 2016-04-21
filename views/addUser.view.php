@@ -1,4 +1,5 @@
 <?php
+require_once('../models/exceptions.model.php');
 require_once('../models/core.model.php');
 require_once('../models/users.model.php');
 
@@ -10,7 +11,7 @@ $username = $_POST['username'];
 $firstName = $_POST['firstName'];
 $lastName = $_POST['lastName'];
 $email = $_POST['email'];
-$passwd = $_POST['passwd'];
+$passwd = $_POST['password'];
 $oauth = $_POST['oauth'];
 
 if($user->addUser($username, $firstName, $lastName, $email, $passwd, $oauth, $conn)){

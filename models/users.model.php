@@ -56,16 +56,25 @@
  	// Cadastra usuário no banco
  	function addUser($username, $firstName, $lastName, $email, $passwd, $oauth, $conn)
  	{	
- 		// Cria sql
- 		$sql = "INSERT INTO app_conta
- 		(conta_firstname, conta_lastname, conta_username, conta_email, conta_password, conta_oauth) 
- 		VALUES ('$firstName', '$lastName', '$username',  '$email', '$passwd', '$oauth');";
+ 		try{
+ 			// Criptografa senha para md5
+ 			$passwd = md5($passwd);
+ 			// Cria sql
+	 		$sql = "INSERT INTO app_conta
+	 		(conta_firstname, conta_lastname, conta_username, conta_email, conta_password, conta_oauth) 
+	 		VALUES ('$firstName', '$lastName', '$username',  '$email', '$passwd', '$oauth');";
 
- 		// Insere no banco 
- 		if($this->inputSql($sql,$conn))
- 		{	
- 			return true;
+	 		// Insere no banco 
+	 		if($this->inputSql($sql,$conn))
+	 		{	
+	 			return true;
+	 		}
  		}
+ 		catch(PicAppError $e)
+ 		{
+ 			throw new Exception($e->getMessage());
+ 		}
+ 			
  	}
 
  	// Autentica usuario
