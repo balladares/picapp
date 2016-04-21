@@ -16,7 +16,7 @@ $(document).ready(function(){
 				url: "views/addUser.view.php",
 				data: dados,
 				successs: function(ret){
-					$(".msg-retorno").html();
+					$(".msg-retorno").html(ret);
 				}
 		});
 	}
