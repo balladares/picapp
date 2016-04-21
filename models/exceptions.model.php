@@ -6,7 +6,7 @@
  * Gabriel Balladares
  */
 
- class PicAppError extends Exceptions
+ class PicAppError extends Exception
  {
   
  }
