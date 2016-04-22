@@ -17,7 +17,7 @@ $(document).ready(function(){
 	function loginUsuario(dados){
 		$.ajax({
 				type: "POST",
-				url: "views/login.view.php",
+				url: "views/logar.view.php",
 				data: dados,
 				success: function(ret){
 					$(".msg-retorno").html(ret);
