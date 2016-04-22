@@ -1,4 +1,5 @@
 <?php
+require_once('../models/exceptions.model.php');
 require_once('../models/core.model.php');
 require_once('../models/users.model.php');
 require_once('../views/conecta.view.php');
@@ -6,7 +7,7 @@ session_start();
 
 // Cria variaveis vindas do form
 $username = $_POST['username'];
-$passwd = $_POST['passwd'];
+$passwd = $_POST['password'];
 
 // Cria objeto
 $appUser = new appUsers();
