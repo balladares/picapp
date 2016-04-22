@@ -53,12 +53,18 @@
  		
  	}
 
+ 	function passwdCrypt($passwd)
+ 	{
+ 		$passwd = md5($passwd);
+ 		return $passwd;
+ 	}
+
  	// Cadastra usuário no banco
  	function addUser($username, $firstName, $lastName, $email, $passwd, $oauth, $conn)
  	{	
  		try{
  			// Criptografa senha para md5
- 			$passwd = md5($passwd);
+ 			$passwd = $this->passwdCrypt($passwd);
  			// Cria sql
 	 		$sql = "INSERT INTO app_conta
 	 		(conta_firstname, conta_lastname, conta_username, conta_email, conta_password, conta_oauth) 
@@ -72,7 +78,7 @@
  		}
  		catch(PicAppError $e)
  		{
- 			throw new Exception($e->getMessage());
+ 			echo 'ERROR: ' . $e->getMessage();
  		}
  			
  	}
@@ -81,8 +87,11 @@
  	function userAuth($username, $passwd, $conn)
  	{
 		try{
+			// Criptografa senha para md5
+ 			$passwd = $this->passwdCrypt($passwd);
+
 			// Cria Sql
-			$sql = 'SELECT COUNT(*) FROM swe_users WHERE username = ' . $conn->quote($username) .' AND password =' .$conn->quote($passwd);
+			$sql = 'SELECT COUNT(*) FROM app_conta WHERE conta_username = ' . $conn->quote($username) .' AND conta_password =' .$conn->quote($passwd);
 
 			// Verifica quantidade de dados achados no banco
   			$userQntd = $this->countSql($sql,$conn);
@@ -121,35 +130,49 @@
 	// Verifica se usuario esta logado
 	function userVerify()
 	{
-		// Verifica se sessao está aberta 
-		if (isset($_SESSION["id"]))
+		try
 		{
-			// True se usuario ta logado
-			return true;
+			// Verifica se sessao está aberta 
+			if (isset($_SESSION["id"]))
+			{
+				// True se usuario ta logado
+				return true;
+			}
+			else
+			{
+				// False usuario deslogado
+				return false;
+			}
 		}
-		else
-		{
-			// False usuario deslogado
-			return false;
-		}
+		catch(PicAppError $e)
+ 		{
+ 			echo 'ERROR: ' . $e->getMessage();
+ 		}
 	}
 
 	// Desloga usuário, quebra sessao
 	function userLogout()
 	{
-		if($this->userVerify())
+		try
 		{
-			// Destrói sessão
-			session_destroy();
+			if($this->userVerify())
+			{
+				// Destrói sessão
+				session_destroy();
 
-			// Retorna true se deslogado
-			return true;
+				// Retorna true se deslogado
+				return true;
+			}
+			else
+			{
+				// Retorna false se nao deslogou
+				return false;
+			}
 		}
-		else
-		{
-			// Retorna false se nao deslogou
-			return false;
-		}
+		catch(PicAppError $e)
+ 		{
+ 			echo 'ERROR: ' . $e->getMessage();
+ 		}
 	}
 
 
